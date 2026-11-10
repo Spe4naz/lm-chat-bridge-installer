@@ -120,11 +120,11 @@ id "$TARGET_USER" >/dev/null 2>&1 || die "Пользователь не найд
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 [[ -n "$TARGET_HOME" ]] || die "Не удалось определить домашний каталог $TARGET_USER"
 
+if [[ -z "$LMS_BIN" && -x "$TARGET_HOME/.lmstudio/bin/lms" ]]; then
+  LMS_BIN="$TARGET_HOME/.lmstudio/bin/lms"
+fi
 if [[ -z "$LMS_BIN" ]]; then
   LMS_BIN="$(command -v lms 2>/dev/null || true)"
-  if [[ -z "$LMS_BIN" && -x "$TARGET_HOME/.lmstudio/bin/lms" ]]; then
-    LMS_BIN="$TARGET_HOME/.lmstudio/bin/lms"
-  fi
 fi
 if [[ -n "$LMS_BIN" ]] && command -v readlink >/dev/null 2>&1; then
   LMS_BIN="$(readlink -f "$LMS_BIN" 2>/dev/null || printf '%s' "$LMS_BIN")"
