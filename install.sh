@@ -80,7 +80,9 @@ fi
 
 TEMP_BRIDGE=""
 cleanup() {
-  [[ -n "$TEMP_BRIDGE" ]] && rm -f "$TEMP_BRIDGE"
+  if [[ -n "$TEMP_BRIDGE" ]]; then
+    rm -f "$TEMP_BRIDGE"
+  fi
 }
 trap cleanup EXIT
 
@@ -164,8 +166,13 @@ umask 077
   printf 'BRIDGE_HOST=%s\n' "$(env_quote "$BRIDGE_HOST")"
   printf 'BRIDGE_PORT=%s\n' "$(env_quote "$BRIDGE_PORT")"
   printf 'LMS_BIN=%s\n' "$(env_quote "$LMS_BIN")"
-  [[ -n "$LMS_HOST" ]] && printf 'LMS_HOST=%s\n' "$(env_quote "$LMS_HOST")"
-  [[ -n "$LMS_API_KEY" ]] && printf 'LMS_API_KEY=%s\n' "$(env_quote "$LMS_API_KEY")"
+  if [[ -n "$LMS_HOST" ]]; then
+    printf 'LMS_HOST=%s\n' "$(env_quote "$LMS_HOST")"
+  fi
+  if [[ -n "$LMS_API_KEY" ]]; then
+    printf 'LMS_API_KEY=%s\n' "$(env_quote "$LMS_API_KEY")"
+  fi
+  :
 } > "$ENV_FILE"
 chown root:root "$ENV_FILE"
 chmod 600 "$ENV_FILE"
