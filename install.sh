@@ -73,7 +73,10 @@ done
 
 if [[ ${EUID} -ne 0 ]]; then
   command -v sudo >/dev/null 2>&1 || die "Нужны права root: запустите через sudo."
-  exec sudo -- bash "$0" "$@"
+  if [[ -f "${BASH_SOURCE[0]}" && "${BASH_SOURCE[0]}" != "bash" ]]; then
+    exec sudo -- bash "${BASH_SOURCE[0]}" "$@"
+  fi
+  die "Запустите через sudo: sudo bash install.sh"
 fi
 
 # ---------------------------------------------------------------- checks
