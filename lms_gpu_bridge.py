@@ -26,7 +26,8 @@ Environment variables:
     BRIDGE_CHAT_TIMEOUT  seconds to wait for chat tokens (default: 1800)
     BRIDGE_JOB_TTL       seconds to keep a finished chat job (default: 3600)
     BRIDGE_MAX_JOBS      maximum chat jobs kept in memory (default: 8)
-    BRIDGE_MAX_BODY      maximum request body size in bytes (default: 4 MiB)
+    BRIDGE_MAX_BODY      maximum request body size in bytes (default: 32 MiB;
+                         large enough for base64 vision images)
 
 Endpoints:
     GET  /health
@@ -77,7 +78,7 @@ LOAD_TIMEOUT = int(os.environ.get("BRIDGE_LOAD_TIMEOUT", "900"))
 CHAT_TIMEOUT = int(os.environ.get("BRIDGE_CHAT_TIMEOUT", "1800"))
 JOB_TTL = int(os.environ.get("BRIDGE_JOB_TTL", "3600"))
 MAX_JOBS = int(os.environ.get("BRIDGE_MAX_JOBS", "8"))
-MAX_BODY = int(os.environ.get("BRIDGE_MAX_BODY", str(4 * 1024 * 1024)))
+MAX_BODY = int(os.environ.get("BRIDGE_MAX_BODY", str(32 * 1024 * 1024)))
 
 AUTH_SCHEME = "Bearer "
 
